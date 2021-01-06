@@ -1,5 +1,5 @@
-# Express passport-local session based
+# Express session based auth
 
 + express
-+ passport-local
-+ ejs
+
+[Mongoose update](https://mongoosejs.com/docs/documents.html#updating-using-queries)

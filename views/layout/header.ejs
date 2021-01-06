@@ -1,0 +1,32 @@
+<!-- views/layout/header.ejs -->
+<div class="w-full bg-gray-900 text-white">
+  <nav class="container m-auto flex justify-between py-4">
+    <span class="font-bold">Express session based auth</span>
+    <a href="/protected" class="no-underline mr-6">protected</a>
+    <div class="flex items-center">
+      <%if (user) { %>
+        Hello <%= user %>
+        <button id="logout" class="no-underline hover:underline ml-3">logout!</button>
+      <% } else { %>
+        <div class="flex items-center">
+          <a href="/login" class="no-underline mx-3 hover:underline">login</a>|
+          <a href="/register" class="no-underline hover:underline ml-1">register</a>
+        </div>
+      <% } %>
+    </div>
+  </nav>
+</div>
+<script>
+  $('#logout').on('click', function (event) {
+    $.post({
+        contentType: 'application/json',
+        dataType: 'json',
+        url: '/logout',
+        data: {}
+      })
+      .done(function (res) {
+        console.log('res: ', res);
+        window.location.href = "/";
+      })
+  })
+</script>
