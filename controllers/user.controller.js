@@ -59,6 +59,7 @@ const logout = async (req, res, next) => {
   try {
     const { session } = req;
     await session.expireToken(session.token);
+    req.session.destroy();
     res.clearCookie('token');
 
     sendApiSuccess(res, 200, {}, 'Logout succesfully!');
