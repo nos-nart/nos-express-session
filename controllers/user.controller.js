@@ -1,7 +1,9 @@
 const User = require('../models/user.model');
+const Session = require('../models/session.model');
 const { sendApiSuccess, sendApiError } = require('../helpers/response');
 const { initSession } = require('../helpers/session');
 const bcrypt = require('bcryptjs');
+const mongoose = require('mongoose');
 
 const register = async (req, res, next) => {
   try {
@@ -55,8 +57,11 @@ const login = async (req, res, next) => {
 
 const logout = async (req, res, next) => {
   try {
+    const { token } = req.body;
     req.session.user = '';
-    
+    const session = await Session.findOne({ token }).exec(function(err, session) {});
+    session.expireToken();
+
     sendApiSuccess(res, 200, {}, 'Logout succesfully!');
   } catch (error) {
     sendApiError(res, 401, error, 'Something went wrong!');
