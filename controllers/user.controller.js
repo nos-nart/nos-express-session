@@ -57,14 +57,13 @@ const login = async (req, res, next) => {
 
 const logout = async (req, res, next) => {
   try {
-    const { token } = req.body;
-    req.session.user = '';
-    const session = await Session.findOne({ token }).exec(function(err, session) {});
-    session.expireToken();
+    const { session } = req;
+    await session.expireToken(session.token);
+    res.clearCookie('token');
 
     sendApiSuccess(res, 200, {}, 'Logout succesfully!');
   } catch (error) {
-    sendApiError(res, 401, error, 'Something went wrong!');
+    sendApiError(res, 400, error, 'Logout failed!');
   }
 }
 

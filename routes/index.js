@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const { register, login, logout } = require('../controllers/user.controller');
 const { protected } = require('../controllers/protected.controller');
+const { authenticate } = require('../middlewares/auth.middleware');
 
 router.route('/')
   .get((req, res) => {
@@ -18,8 +19,9 @@ router.route('/login')
   .post(login)
 
 router.route('/protected')
+  .all(authenticate)
   .get((req, res) => res.render('pages/protected'))
-  .get()
+  .get(protected)
 
 router.route('/logout')
   .post(logout)
