@@ -1,8 +1,8 @@
-const sendApiSuccess = (res, status, data, message) => {
-  return res.status(status)
+const sendApiSuccess = (res, statusCode, data, message) => {
+  return res.status(statusCode)
     .send({
       ok: true,
-      status,
+      status: statusCode,
       message,
       data,
       error: null
@@ -10,10 +10,10 @@ const sendApiSuccess = (res, status, data, message) => {
 }
 
 const sendApiError = (res, status, error, message) => {
-  return res.status(status)
+  return res.status(statusCode)
     .send({
       ok: false,
-      status,
+      status: statusCode,
       message,
       data: null,
       error
